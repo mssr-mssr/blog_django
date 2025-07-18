@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+{% block title %} INCIO {% endblock title %} INICIO
+
+{% block content %}
+<h1 class="mb-4"> Publicaciones </h1>
+
+{% for post in posts %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-titlle">{{post.titulo}} </h5>
+        <p class="card-text">{{post.contenido }}</p>
+        <p class="card-text"><small class="text-muted">por {{post.autor}} el {{post.fecha_publicacion}}</small></p>
+        <a href="{% url 'detalle_post' post.pk %}" class="btn btn-primary"> Leer más </a>
+    </div>
+</div>
+{%endfor%}
+{% endblock %}
+

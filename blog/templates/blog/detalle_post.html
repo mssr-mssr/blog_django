@@ -1,0 +1,31 @@
+{% extends "blog/base.html" %}
+{% block title %} Detalle {% endblock title %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">{{post.titulo}}</h2>
+        <p class="card-text">{{post.contenido}}</p>
+        <p><small class="text-muted">por {{post.autor}}{{post.fecha_publicacion}}</small></p>
+    </div>
+</div>
+
+<h3 class="mt-4">Comentarios</h3>
+{% for comentario in comentarios %}
+    <div class="alert alert-secondary mt-2">
+        <strong>{{comentario.autor}}</strong>:{{comentario.text}}
+        <br><small class="text-muted">{{comentario.fecha}}</small>
+    </div>
+{% empty %}
+    <p> No hay comentarios para esta publicación aún </p>
+{% endfor %}  
+
+<hr>
+
+<h3> Agregar un comentario</h3>
+<form method = 'post'>
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-success mt-2"> Enviar </button>
+</form>
+{% endblock %}

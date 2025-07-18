@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% block title %}Loging{% endblock title %}
+
+{% block content %}
+
+<h2>INICIAR SESIÓN</h2>
+
+<form method='post' class="w-50 mx-auto">
+    {%csrf_token%}
+    {% csrf_token %}
+    {% if error %} <div class="alert alert-danger">{{error}}</div>{% endif %}
+    <div class="mb-3">
+        <input type="text" name="username" class="form-control" placeholder="Usuario" required>
+    </div>
+
+    <div class="mb-3">
+    <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+    </div>
+
+    <button class="btn btn-primary" type="submit"> INGRESAR </button>
+    </form>
+    <a href="{% url 'registro' %}"> No tienes una cuenta? Regístrate</a>
+{% endblock content %}
