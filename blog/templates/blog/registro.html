@@ -1,10 +1,25 @@
-<h2>REGISTRO DE USUARIO</h2>
-<form method = 'post'>
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Usuario" required>
-    <input type="password" name="password" placeholder="Contraseña" required>
-    <button type="submit"> REGISTRARSE </button>
+{% extends "blog/base.html" %}
+{% block title %}Registro{% endblock title %}
 
-</form>  
-<a href="{% url 'login'%}" > Ya tienes una cuenta? Iniciar sesión </a>
+{% block content %}
+
+<h2>REGISTRO DE USUARIO</h2>
+
+<form method='post' class="w-50 mx-auto">
+    {% csrf_token %}
+    {% if error %} <div class="alert alert-danger">{{error}}</div> {% endif %}
     
+    <div class="mb-3">
+        <input type="text" name="username" class="form-control" placeholder="Usuario" required>
+    </div>
+
+    <div class="mb-3">
+        <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+    </div>
+
+    <button class="btn btn-primary" type="submit"> REGISTRARSE </button>
+</form>
+
+<a href="{% url 'login' %}" class="d-block mt-3">Ya tienes una cuenta? Iniciar sesión</a>
+
+{% endblock content %}
