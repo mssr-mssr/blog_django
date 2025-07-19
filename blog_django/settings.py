@@ -133,8 +133,12 @@ LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/posts/'
 LOGOUT_REDIRECT_URL = '/'
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+'''
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",
     "http://localhost:8000",
     "https://blog-django-4g82.onrender.com",
 ]
+'''
