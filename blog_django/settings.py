@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-&yqpjit-bl_#v*6f=xi902y7fx)5ae+b1ynlnj^8qaw4%hv*ew
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
+
 
 # Application definition
 
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middlerware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'blog_django.urls'
@@ -77,9 +80,9 @@ WSGI_APPLICATION = 'blog_django.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config (
+    'default':  dj_database_url.config(
         default = os.environ.get('DATABASE_URL')
-    )
+    ) 
 }
 
 
@@ -129,4 +132,4 @@ LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/posts/'
 LOGOUT_REDIRECT_URL = '/'
 
-
+CORS_ALLOWED_ORIGINS = True
