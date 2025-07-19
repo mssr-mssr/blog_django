@@ -23,5 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', iniciar_sesion, name='login'),
     path('blog/', include('blog.urls')),
-    path('api/', include('blog.api_urls'),)
+    path('api/', include('blog.api_urls')),
 ]
