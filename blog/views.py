@@ -1,24 +1,24 @@
 from django.shortcuts import render
 from .models import Post
 from django.shortcuts import get_object_or_404
-from .forms import FormularioComentario
+from .forms import FormularioComentario, PostForm
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-#from django import ListView
 
 # Create your views here.
+
 @login_required
 def lista_posts(request):
-	post = Post.objects.all().order_by
-	return render(request, 'blog/lista_posts.html', {'posts':post})
+    posts= Post.objects.all().order_by('-fecha_publicacion')
+    return render(request, 'blog/lista_posts.html', {'posts':posts})
 
+@login_required
 def detalle_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comentarios = post.comentarios.all()
-    #return render(request, 'blog/detalle_post.html', {'post': post, 'comentarios': comentarios})
-
+    
     if request.method == 'POST':
         form = FormularioComentario(request.POST)
         if form.is_valid():
@@ -28,7 +28,7 @@ def detalle_post(request, pk):
             form = FormularioComentario()
     else:
         form = FormularioComentario()
-        
+    
     return render(request, 'blog/detalle_post.html', {
         'post' : post,
         'comentarios' : comentarios,
@@ -36,18 +36,28 @@ def detalle_post(request, pk):
     })
 
 '''
-class ListaPostView(ListView):
+class ListaPostView (ListView):
     model = Post
     template_name = 'blog/lista_post_cbv.html'
     contex_object_name = 'posts'
 '''
+def crear_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_posts')
+    else:
+        form = PostForm()
+    return render(request, 'blog/crear_post.html', {'form':form})
 
 def registro(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         User.objects.create_user(username=username, password=password)
-        return redirect('login') 
+        return redirect('login')
+    
     return render(request, 'blog/registro.html')
 
 def iniciar_sesion(request):
@@ -60,7 +70,7 @@ def iniciar_sesion(request):
             return redirect('lista_posts')
         else:
             return render(request, 'blog/login.html', {'error': 'Credenciales incorrectas'})
-    
+        
     return render(request, 'blog/login.html')
 
 def cerrar_sesion(request):

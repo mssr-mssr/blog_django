@@ -1,5 +1,5 @@
 {% extends "blog/base.html" %}
-{% block title %} INCIO {% endblock title %} INICIO
+{% block title %} INICIO {% endblock title %} 
 
 {% block content %}
 <h1 class="mb-4"> Publicaciones </h1>
@@ -7,12 +7,15 @@
 {% for post in posts %}
 <div class="card mb-3">
     <div class="card-body">
-        <h5 class="card-titlle">{{post.titulo}} </h5>
-        <p class="card-text">{{post.contenido }}</p>
-        <p class="card-text"><small class="text-muted">por {{post.autor}} el {{post.fecha_publicacion}}</small></p>
+        <h5 class="card-title"> {{post.titulo}} </h5>
+        <p class="card-text">{{post.contenido | truncatechars:200}}</p>
+        <p class="card-text"><small class="text-muted">por {{post.autor}} el {{post.fecha_publicacion}} </small></p>
         <a href="{% url 'detalle_post' post.pk %}" class="btn btn-primary"> Leer más </a>
     </div>
+    <div>
+    <a href="{% url 'crear_post' %}" class="btn btn-primary"> Crear Post </a>
 </div>
-{%endfor%}
+</div>
+{% endfor %}
 {% endblock %}
 
